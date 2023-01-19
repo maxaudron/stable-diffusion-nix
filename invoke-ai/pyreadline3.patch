@@ -1,0 +1,12 @@
+diff --git i/setup.py w/setup.py
+index afec71b9..717ae471 100644
+--- i/setup.py
++++ w/setup.py
+@@ -38,7 +38,6 @@ REQUIREMENTS=[
+     'flaskwebgui',
+     'getpass_asterisk',
+     'imageio-ffmpeg',
+-    'pyreadline3',
+     'realesrgan',
+     'send2trash',
+     'streamlit',
