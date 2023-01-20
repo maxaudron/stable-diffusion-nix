@@ -5,11 +5,24 @@ let
     (pkg: {
       name = pkg;
       value = super.${pkg}.overridePythonAttrs (attrs: {
+        nativeBuildInputs = (attrs.nativeBuildInputs or [ ]) ++ [
+          pkgs.autoPatchelfHook
+          pkgs.cudaPackages.autoAddOpenGLRunpathHook
+          pkgs.cudatoolkit
+          pkgs.cudaPackages.cudnn
+        ];
+
         propagatedBuildInputs = (attrs.propagatedBuildInputs or [ ]) ++ (with super; [
           self.nvidia-cudnn-cu11
           self.nvidia-cuda-nvrtc-cu11
           self.nvidia-cuda-runtime-cu11
         ]);
+
+        postInstall = ''
+          addAutoPatchelfSearchPath "${self.nvidia-cublas-cu11}/${self.python.sitePackages}/nvidia/cublas/lib"
+          addAutoPatchelfSearchPath "${self.nvidia-cudnn-cu11}/${self.python.sitePackages}/nvidia/cudnn/lib"
+          addAutoPatchelfSearchPath "${self.nvidia-cuda-nvrtc-cu11}/${self.python.sitePackages}/nvidia/cuda_nvrtc/lib"
+        '';
       });
     })
     packages));
@@ -18,7 +31,6 @@ self: super: (addNvidia self super [
   "kornia"
   "accelerate"
   "torchmetrics"
-  "torchvision"
   "torch-fidelity"
   "taming-transformers-rom1504"
   "facexlib"
@@ -32,11 +44,42 @@ self: super: (addNvidia self super [
 ]) // {
   wheel = super.wheel.override { preferWheel = false; };
 
-  clipseg = super.clipseg.overridePythonAttrs (old: {
-    buildInputs = (old.buildInputs or [ ]) ++ (with super; [
+  xformers = (super.xformers.override {
+    preferWheel = true;
+  }).overridePythonAttrs (attrs: rec {
+    autoPatchelfIgnoreMissingDeps = [
+      "libcudart.so.11.0"
+    ];
+
+    nativeBuildInputs = (attrs.nativeBuildInputs or [ ]) ++ (with pkgs; [
+      autoPatchelfHook
+      cudaPackages.autoAddOpenGLRunpathHook
+      cudatoolkit
+    ]);
+
+    propagatedBuildInputs = (attrs.propagatedBuildInputs or [ ]) ++ (with self; [
+      nvidia-cudnn-cu11
+      nvidia-cuda-nvrtc-cu11
+      nvidia-cuda-runtime-cu11
+
+      torch
+      numpy
+    ]);
+
+    postInstall = ''
+      addAutoPatchelfSearchPath "${self.nvidia-cublas-cu11}/${self.python.sitePackages}/nvidia/cublas/lib"
+      addAutoPatchelfSearchPath "${self.nvidia-cudnn-cu11}/${self.python.sitePackages}/nvidia/cudnn/lib"
+      addAutoPatchelfSearchPath "${self.nvidia-cuda-nvrtc-cu11}/${self.python.sitePackages}/nvidia/cuda_nvrtc/lib"
+      addAutoPatchelfSearchPath "${self.torch}/${self.python.sitePackages}/torch/lib"
+    '';
+  });
+
+  clipseg = super.clipseg.overridePythonAttrs (attrs: {
+    buildInputs = (attrs.buildInputs or [ ]) ++ (with super; [
       setuptools
     ]);
-    propagatedBuildInputs = (old.propagatedBuildInputs or [ ]) ++ (with self; [
+
+    propagatedBuildInputs = (attrs.propagatedBuildInputs or [ ]) ++ (with self; [
       numpy
       scipy
       torch
@@ -53,11 +96,12 @@ self: super: (addNvidia self super [
     ]);
   });
 
-  clip = super.clip.overridePythonAttrs (old: {
-    buildInputs = (old.buildInputs or [ ]) ++ (with super; [
+  clip = super.clip.overridePythonAttrs (attrs: {
+    buildInputs = (attrs.buildInputs or [ ]) ++ (with super; [
       setuptools
     ]);
-    propagatedBuildInputs = (old.propagatedBuildInputs or [ ]) ++ (with self; [
+
+    propagatedBuildInputs = (attrs.propagatedBuildInputs or [ ]) ++ (with self; [
       ftfy
       regex
       tqdm
@@ -71,18 +115,21 @@ self: super: (addNvidia self super [
   });
 
   basicsr = super.basicsr.overridePythonAttrs (attrs: {
-    propagatedBuildInputs = (attrs.propagatedBuildInputs or [ ]) ++ (with super; [
+    propagatedBuildInputs = (attrs.propagatedBuildInputs or [ ]) ++ (with self; [
       cython
 
-      self.nvidia-cudnn-cu11
-      self.nvidia-cuda-nvrtc-cu11
-      self.nvidia-cuda-runtime-cu11
+      nvidia-cudnn-cu11
+      nvidia-cuda-nvrtc-cu11
+      nvidia-cuda-runtime-cu11
     ]);
   });
 
-  pypatchmatch = super.pypatchmatch.overridePythonAttrs (old: {
-    buildInputs = (old.buildInputs or [ ]) ++ (with super; [
+  pypatchmatch = super.pypatchmatch.overridePythonAttrs (attrs: {
+    buildInputs = (attrs.buildInputs or [ ]) ++ (with super; [
       setuptools
+
+      opencv-python
+      pkgs.opencv
     ]);
   });
 
@@ -136,13 +183,18 @@ self: super: (addNvidia self super [
   };
 
   nvidia-cudnn-cu11 = super.nvidia-cudnn-cu11.overridePythonAttrs (attrs: {
-    nativeBuildInputs = attrs.nativeBuildInputs or [ ] ++ [ pkgs.autoPatchelfHook ];
+    nativeBuildInputs = (attrs.nativeBuildInputs or [ ]) ++ [
+      pkgs.autoPatchelfHook
+    ];
+
     preFixup = ''
       addAutoPatchelfSearchPath "${self.nvidia-cublas-cu11}/${self.python.sitePackages}/nvidia/cublas/lib"
     '';
+
     postFixup = ''
       rm -r $out/${self.python.sitePackages}/nvidia/{__pycache__,__init__.py}
     '';
+
     propagatedBuildInputs = attrs.propagatedBuildInputs or [ ] ++ [
       self.nvidia-cublas-cu11
     ];
@@ -154,21 +206,45 @@ self: super: (addNvidia self super [
     '';
   });
 
-  torch = super.torch.overridePythonAttrs (attrs: {
-    nativeBuildInputs = attrs.nativeBuildInputs or [ ] ++ [
+  torch = (super.torch.override {
+    enableCuda = true;
+    cudatoolkit = pkgs.cudatoolkit;
+    preferWheel = false;
+  }).overridePythonAttrs (attrs: {
+    nativeBuildInputs = (attrs.nativeBuildInputs or [ ]) ++ [
       pkgs.autoPatchelfHook
       pkgs.cudaPackages.autoAddOpenGLRunpathHook
     ];
-    buildInputs = attrs.buildInputs or [ ] ++ [
+
+    buildInputs = (attrs.buildInputs or [ ]) ++ [
       self.nvidia-cudnn-cu11
       self.nvidia-cuda-nvrtc-cu11
       self.nvidia-cuda-runtime-cu11
     ];
-    propagatedBuildInputs = attrs.propagatedBuildInputs or [ ] ++ [
+
+    postInstall = ''
+      addAutoPatchelfSearchPath "${self.nvidia-cublas-cu11}/${self.python.sitePackages}/nvidia/cublas/lib"
+      addAutoPatchelfSearchPath "${self.nvidia-cudnn-cu11}/${self.python.sitePackages}/nvidia/cudnn/lib"
+      addAutoPatchelfSearchPath "${self.nvidia-cuda-nvrtc-cu11}/${self.python.sitePackages}/nvidia/cuda_nvrtc/lib"
+    '';
+  });
+
+  torchvision = (super.torchvision.override {
+    enableCuda = true;
+    cudatoolkit = pkgs.cudatoolkit;
+    preferWheel = false;
+  }).overridePythonAttrs (attrs: {
+    nativeBuildInputs = (attrs.nativeBuildInputs or [ ]) ++ [
+      pkgs.autoPatchelfHook
+      pkgs.cudaPackages.autoAddOpenGLRunpathHook
+    ];
+
+    buildInputs = (attrs.buildInputs or [ ]) ++ [
       self.nvidia-cudnn-cu11
       self.nvidia-cuda-nvrtc-cu11
       self.nvidia-cuda-runtime-cu11
     ];
+
     postInstall = ''
       addAutoPatchelfSearchPath "${self.nvidia-cublas-cu11}/${self.python.sitePackages}/nvidia/cublas/lib"
       addAutoPatchelfSearchPath "${self.nvidia-cudnn-cu11}/${self.python.sitePackages}/nvidia/cudnn/lib"

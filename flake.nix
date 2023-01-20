@@ -27,15 +27,23 @@
       url = "github:invoke-ai/InvokeAI";
       flake = false;
     };
+
+    automatic1111 = {
+      url = "github:AUTOMATIC1111/stable-diffusion-webui";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, utils, poetry2nix, invokeai }:
+  outputs = { self, nixpkgs, utils, poetry2nix, invokeai, automatic1111 }:
     with nixpkgs.lib;
     utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
           inherit system;
-          config = { allowUnfree = true; };
+          config = {
+            allowUnfree = true;
+            cudaSupport = true;
+          };
           overlay = [ poetry2nix.overlay ];
         };
 
@@ -43,21 +51,22 @@
           inherit pkgs;
           inherit (nixpkgs) lib;
         };
-
-        env = pkgs.poetry2nix.mkPoetryEnv {
-          projectDir = ./.;
-          python = pkgs.python310;
-          pyproject = ./pyproject.toml;
-          poetrylock = ./poetry.lock;
-          preferWheels = true;
-
-          overrides = [ overrides pkgs.poetry2nix.defaultPoetryOverrides ];
-        };
       in
       {
         packages = {
-          env = env;
-          default = pkgs.poetry2nix.mkPoetryApplication {
+          automatic1111 = pkgs.poetry2nix.mkPoetryApplication {
+            projectDir = ./automatic1111;
+            src = automatic1111;
+            python = pkgs.python310;
+            pyproject = ./automatic1111/pyproject.toml;
+            poetrylock = ./automatic1111/poetry.lock;
+            preferWheels = true;
+
+            dontUseWheelUnpack = true;
+
+            overrides = [ overrides pkgs.poetry2nix.defaultPoetryOverrides ];
+          };
+          invoke-ai = pkgs.poetry2nix.mkPoetryApplication {
             projectDir = ./invoke-ai;
             src = invokeai;
             python = pkgs.python310;
@@ -78,13 +87,20 @@
             type = "app";
             program = "${pkgs.writeShellScriptBin "configure.sh" ''
               cd ${invokeai}
-              ${self.packages.${system}.default}/bin/configure_invokeai.py $@
+              ${self.packages.${system}.invoke-ai}/bin/configure_invokeai.py $@
             ''}/bin/configure.sh";
           };
 
           invoke-ai = {
             type = "app";
-            program = "${self.packages.${system}.default}/bin/invoke.py";
+            program = "${pkgs.buildFHSUserEnv {
+              name = "invoke-ai-fhs";
+              targetPkgs = pkgs: (with pkgs; [
+                cudatoolkit
+                cudaPackages.cudnn
+              ]);
+              runScript = "${self.packages.${system}.invoke-ai}/bin/invoke.py";
+            }}/bin/invoke-ai-fhs";
           };
         };
 

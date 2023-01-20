@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "automatic1111": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1674206370,
+        "narHash": "sha256-3SAPQhyX0hn2p4cJhHoHnmGwb/DIpH4hIIaN8qXqTW0=",
+        "owner": "AUTOMATIC1111",
+        "repo": "stable-diffusion-webui",
+        "rev": "e33cace2c2074ef342d027c1f31ffc4b3c3e877e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AUTOMATIC1111",
+        "repo": "stable-diffusion-webui",
+        "type": "github"
+      }
+    },
     "invokeai": {
       "flake": false,
       "locked": {
@@ -54,6 +70,7 @@
     },
     "root": {
       "inputs": {
+        "automatic1111": "automatic1111",
         "invokeai": "invokeai",
         "nixpkgs": "nixpkgs",
         "poetry2nix": "poetry2nix",

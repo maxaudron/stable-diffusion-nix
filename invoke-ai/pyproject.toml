@@ -11,6 +11,9 @@ description = "InvokeAI"
 [tool.poetry.dependencies]
 python = "^3.10"
 
+# xformers = { git = "https://github.com/facebookresearch/xformers", branch = "main" }
+xformers = "0.0.16.dev430"
+
 # Use arrow 9 as this is the version nixpkgs provides
 pyarrow = { version = "^9.0.0", optional = true }
 
@@ -63,3 +66,6 @@ clipseg = { git = "https://github.com/invoke-ai/clipseg.git", branch = "relaxed-
 nvidia-cudnn-cu11 = "~8.5.0"
 nvidia-cuda-nvrtc-cu11 = "~11.7"
 nvidia-cuda-runtime-cu11 = "~11.7"
+
+torch = ">=1.13.1"
+torchvision = ">=0.14.1"

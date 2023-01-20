@@ -444,27 +444,6 @@ python-versions = "*"
 files = []
 develop = false
 
-[package.extras]
-dev = ["pytest"]
-
-[package.source]
-type = "git"
-url = "https://github.com/openai/CLIP.git"
-reference = "eaa22acb90a5876642d0507623e859909230a52d"
-resolved_reference = "eaa22acb90a5876642d0507623e859909230a52d"
-
-[[package]]
-name = "clip-anytorch"
-version = "2.5.0"
-description = "# CLIP"
-category = "main"
-optional = false
-python-versions = "*"
-files = [
-    {file = "clip-anytorch-2.5.0.tar.gz", hash = "sha256:a317309f708399e61c25a9e24a6817486b9055247f39950e023f676b22e1c8dd"},
-    {file = "clip_anytorch-2.5.0-py3-none-any.whl", hash = "sha256:96c36ccc2b1d601529a1e630bf418edfa391b3ea1f1636546c6edc50fd85f5bd"},
-]
-
 [package.dependencies]
 ftfy = "*"
 regex = "*"
@@ -475,10 +454,16 @@ tqdm = "*"
 [package.extras]
 dev = ["pytest"]
 
+[package.source]
+type = "git"
+url = "https://github.com/openai/CLIP.git"
+reference = "eaa22acb90a5876642d0507623e859909230a52d"
+resolved_reference = "eaa22acb90a5876642d0507623e859909230a52d"
+
 [[package]]
 name = "clipseg"
 version = "0.0.1"
-description = ""
+description = "This repository contains the code used in the paper \"Image Segmentation Using Text and Image Prompts\"."
 category = "main"
 optional = false
 python-versions = ">=3.7"
@@ -1023,14 +1008,14 @@ files = [
 
 [[package]]
 name = "fsspec"
-version = "2022.11.0"
+version = "2023.1.0"
 description = "File-system specification"
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "fsspec-2022.11.0-py3-none-any.whl", hash = "sha256:d6e462003e3dcdcb8c7aa84c73a228f8227e72453cd22570e2363e8844edfe7b"},
-    {file = "fsspec-2022.11.0.tar.gz", hash = "sha256:259d5fd5c8e756ff2ea72f42e7613c32667dc2049a4ac3d84364a7ca034acb8b"},
+    {file = "fsspec-2023.1.0-py3-none-any.whl", hash = "sha256:b833e2e541e9e8cde0ab549414187871243177feb3d344f9d27b25a93f5d8139"},
+    {file = "fsspec-2023.1.0.tar.gz", hash = "sha256:fbae7f20ff801eb5f7d0bedf81f25c787c0dfac5e982d98fa3884a9cde2b5411"},
 ]
 
 [package.dependencies]
@@ -1559,8 +1544,8 @@ format-nongpl = ["fqdn", "idna", "isoduration", "jsonpointer (>1.13)", "rfc3339-
 
 [[package]]
 name = "k-diffusion"
-version = "0.0.12"
-description = ""
+version = "0.0.1"
+description = "Karras et al. (2022) diffusion models for PyTorch"
 category = "main"
 optional = false
 python-versions = "*"
@@ -1570,7 +1555,6 @@ develop = false
 [package.dependencies]
 accelerate = "*"
 clean-fid = "*"
-clip-anytorch = "*"
 einops = "*"
 jsonmerge = "*"
 kornia = "*"
@@ -2051,6 +2035,18 @@ files = [
 
 [package.dependencies]
 dill = ">=0.3.6"
+
+[[package]]
+name = "mypy-extensions"
+version = "0.4.3"
+description = "Experimental type system extensions for programs checked with the mypy typechecker."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "mypy_extensions-0.4.3-py2.py3-none-any.whl", hash = "sha256:090fedd75945a69ae91ce1303b5824f428daf5a028d2f6ab8a299250a846f15d"},
+    {file = "mypy_extensions-0.4.3.tar.gz", hash = "sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8"},
+]
 
 [[package]]
 name = "networkx"
@@ -2754,7 +2750,7 @@ diagrams = ["jinja2", "railroad-diagrams"]
 [[package]]
 name = "pypatchmatch"
 version = "0.1.4"
-description = ""
+description = "This library implements the PatchMatch based inpainting algorithm."
 category = "main"
 optional = false
 python-versions = ">=3.9"
@@ -2770,6 +2766,22 @@ type = "git"
 url = "https://github.com/invoke-ai/PyPatchMatch.git"
 reference = "0.1.5"
 resolved_reference = "36f724ada48f1353a15cdb796ddd96d5f6100680"
+
+[[package]]
+name = "pyre-extensions"
+version = "0.0.23"
+description = "Type system extensions for use with the pyre type checker"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pyre-extensions-0.0.23.tar.gz", hash = "sha256:df019263900af45e83e41fb9e889824e8b7bcdb9cb67fe2957bb80104eadcbc7"},
+    {file = "pyre_extensions-0.0.23-py3-none-any.whl", hash = "sha256:e945fdf4113172cec517c5daeca56f61f6632fd5b8d8165f1253c8865c87e62b"},
+]
+
+[package.dependencies]
+typing-extensions = "*"
+typing-inspect = "*"
 
 [[package]]
 name = "pyrsistent"
@@ -3605,14 +3617,14 @@ test = ["pytest"]
 
 [[package]]
 name = "setuptools"
-version = "66.0.0"
+version = "66.1.0"
 description = "Easily download, build, install, upgrade, and uninstall Python packages"
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "setuptools-66.0.0-py3-none-any.whl", hash = "sha256:a78d01d1e2c175c474884671dde039962c9d74c7223db7369771fcf6e29ceeab"},
-    {file = "setuptools-66.0.0.tar.gz", hash = "sha256:bd6eb2d6722568de6d14b87c44a96fac54b2a45ff5e940e639979a3d1792adb6"},
+    {file = "setuptools-66.1.0-py3-none-any.whl", hash = "sha256:fc19f9f62120a763300fd78e234b3cbd3417be098f08c156eaaf36420627e57b"},
+    {file = "setuptools-66.1.0.tar.gz", hash = "sha256:78a02bdea8a5cb66dec1c507598c443bcc75562817d2556c1a17f7a344615bb4"},
 ]
 
 [package.extras]
@@ -3707,23 +3719,23 @@ tqdm = "*"
 
 [[package]]
 name = "tb-nightly"
-version = "2.12.0a20230119"
+version = "2.12.0a20230120"
 description = "TensorBoard lets you watch Tensors Flow"
 category = "main"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "tb_nightly-2.12.0a20230119-py3-none-any.whl", hash = "sha256:169172627d708d49a6954b9ee83da9d9e27211dcbfe396e36434d25120443d43"},
+    {file = "tb_nightly-2.12.0a20230120-py3-none-any.whl", hash = "sha256:a055e8f69010952dc97522704ec87b45a3d87b66cad3bd406feea1cb68ebf4a6"},
 ]
 
 [package.dependencies]
 absl-py = ">=0.4"
 google-auth = ">=1.6.3,<3"
 google-auth-oauthlib = ">=0.4.1,<0.5"
-grpcio = ">=1.24.3"
+grpcio = ">=1.48.2"
 markdown = ">=2.6.8"
 numpy = ">=1.12.0"
-protobuf = ">=3.9.2,<4"
+protobuf = ">=3.19.6"
 requests = ">=2.21.0,<3"
 setuptools = ">=41.0.0"
 tensorboard-data-server = ">=0.6.0,<0.7.0"
@@ -4216,6 +4228,22 @@ files = [
 ]
 
 [[package]]
+name = "typing-inspect"
+version = "0.8.0"
+description = "Runtime inspection utilities for typing module."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "typing_inspect-0.8.0-py3-none-any.whl", hash = "sha256:5fbf9c1e65d4fa01e701fe12a5bca6c6e08a4ffd5bc60bfac028253a447c5188"},
+    {file = "typing_inspect-0.8.0.tar.gz", hash = "sha256:8b1ff0c400943b6145df8119c41c244ca8207f1f10c9c057aeed1560e4806e3d"},
+]
+
+[package.dependencies]
+mypy-extensions = ">=0.3.0"
+typing-extensions = ">=3.7.4"
+
+[[package]]
 name = "tzdata"
 version = "2022.7"
 description = "Provider of IANA time zone data"
@@ -4431,6 +4459,30 @@ files = [
 
 [package.extras]
 test = ["pytest (>=3.0.0)"]
+
+[[package]]
+name = "xformers"
+version = "0.0.16.dev430"
+description = "XFormers: A collection of composable Transformer building blocks."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "xformers-0.0.16.dev430-cp310-cp310-manylinux2014_x86_64.whl", hash = "sha256:cf11868c94defb9689a511ac6d810f830db1af740e5c54f23fbe5afb56ef9710"},
+    {file = "xformers-0.0.16.dev430-cp310-cp310-win_amd64.whl", hash = "sha256:3e37bb7c53c7171e3005f8dd6cbbdb9708e86e6f67ab66ffec72c30da948247f"},
+    {file = "xformers-0.0.16.dev430-cp37-cp37m-manylinux2014_x86_64.whl", hash = "sha256:538031f8f487e3c4af99182178900b1aa22f355a90df6dbabe1438c0287a9d65"},
+    {file = "xformers-0.0.16.dev430-cp37-cp37m-win_amd64.whl", hash = "sha256:0919ef509c47078511fece17780c9729409700a2aad1ffc76cc32c01901dc988"},
+    {file = "xformers-0.0.16.dev430-cp38-cp38-manylinux2014_x86_64.whl", hash = "sha256:604504e587aa9db2902e3bd34794a0860137f6590d8d6b3e0d6e0a126d37a2c7"},
+    {file = "xformers-0.0.16.dev430-cp38-cp38-win_amd64.whl", hash = "sha256:7230bca36069083b88d755c7e114e4acf7672160729798497cb386b6cf341b1f"},
+    {file = "xformers-0.0.16.dev430-cp39-cp39-manylinux2014_x86_64.whl", hash = "sha256:929984c943c4fb709d3f40a6dc1d0e279d71e2a2209c1fcf8b0a4ae54999f4ca"},
+    {file = "xformers-0.0.16.dev430-cp39-cp39-win_amd64.whl", hash = "sha256:b9726ae8ded0e6b8a32068cd6d8166df6d0a95a10adacd52ac79d84a1797ba6f"},
+    {file = "xformers-0.0.16.dev430.tar.gz", hash = "sha256:b7dd78a674bc30fef4997e1231548d8d2b9ee4bad1e2dbe9dd16a54486dfc65f"},
+]
+
+[package.dependencies]
+numpy = "*"
+pyre-extensions = "0.0.23"
+torch = "1.13.1"
 
 [[package]]
 name = "xxhash"
@@ -4659,4 +4711,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "e0e0f26cd365807ed8af237d580d7d669d484b5afbb456d22216cefb62eb2b76"
+content-hash = "023f86c2bf5c34cb592916e30d49147bb8ca213f06a6f431d4ecc6dbedb3f35e"
