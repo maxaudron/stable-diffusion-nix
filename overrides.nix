@@ -5,24 +5,15 @@ let
     (pkg: {
       name = pkg;
       value = super.${pkg}.overridePythonAttrs (attrs: {
-        nativeBuildInputs = (attrs.nativeBuildInputs or [ ]) ++ [
-          pkgs.autoPatchelfHook
-          pkgs.cudaPackages.autoAddOpenGLRunpathHook
-          pkgs.cudatoolkit
-          pkgs.cudaPackages.cudnn
-        ];
+        buildInputs = (attrs.buildInputs or [ ]) ++ (with super; [
+          setuptools
+        ]);
 
         propagatedBuildInputs = (attrs.propagatedBuildInputs or [ ]) ++ (with super; [
           self.nvidia-cudnn-cu11
           self.nvidia-cuda-nvrtc-cu11
           self.nvidia-cuda-runtime-cu11
         ]);
-
-        postInstall = ''
-          addAutoPatchelfSearchPath "${self.nvidia-cublas-cu11}/${self.python.sitePackages}/nvidia/cublas/lib"
-          addAutoPatchelfSearchPath "${self.nvidia-cudnn-cu11}/${self.python.sitePackages}/nvidia/cudnn/lib"
-          addAutoPatchelfSearchPath "${self.nvidia-cuda-nvrtc-cu11}/${self.python.sitePackages}/nvidia/cuda_nvrtc/lib"
-        '';
       });
     })
     packages));
@@ -41,8 +32,40 @@ self: super: (addNvidia self super [
   "torchsde"
   "clip-anytorch"
   "k-diffusion"
+  "fairscale"
+  "timm"
+  "lpips"
+  "invisible-watermark"
+  "stable-diffusion"
+  "taming-transformers"
+  "open-clip-torch"
 ]) // {
   wheel = super.wheel.override { preferWheel = false; };
+
+  orjson = super.orjson.override { preferWheel = false; };
+
+  font-roboto = super.font-roboto.overridePythonAttrs (attrs: {
+    buildInputs = (attrs.buildInputs or [ ]) ++ (with super; [
+      setuptools
+    ]);
+  });
+
+  ffmpy = super.ffmpy.overridePythonAttrs (attrs: {
+    buildInputs = (attrs.buildInputs or [ ]) ++ (with super; [
+      setuptools
+    ]);
+  });
+
+  mdit-py-plugins = super.mdit-py-plugins.overridePythonAttrs (attrs: {
+    pipInstallFlags = "--no-deps";
+    propagatedBuildInputs = [ ];
+  });
+
+  blendmodes = super.blendmodes.overridePythonAttrs (attrs: {
+    buildInputs = (attrs.buildInputs or [ ]) ++ (with super; [
+      poetry
+    ]);
+  });
 
   xformers = (super.xformers.override {
     preferWheel = true;
@@ -148,7 +171,7 @@ self: super: (addNvidia self super [
     ];
   });
 
-  numba = super.numba.overridePythonAttrs (attrs: {
+  numba = (super.numba.override { preferWheel = true; }).overridePythonAttrs (attrs: {
     autoPatchelfIgnoreMissingDeps = true;
   });
 
