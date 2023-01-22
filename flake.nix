@@ -178,6 +178,7 @@
                   [ ! -d "${userDir}/outputs" ] && mkdir -p "${userDir}/outputs"
                   [ ! -d "${userDir}/configs" ] && mkdir -p "${userDir}/configs"
                   [ ! -d "${userDir}/extensions" ] && mkdir -p "${userDir}/extensions"
+                  [ ! -d "${userDir}/embeddings" ] && mkdir -p "${userDir}/embeddings"
 
                   [ ! -d "${userDir}/models/VAE" ] && mkdir -p "${userDir}/models/VAE"
                   [ ! -d "${userDir}/models/VAE-approx" ] && mkdir -p "${userDir}/models/VAE-approx"
@@ -188,6 +189,7 @@
 
                   ${self.packages.${system}.automatic1111}/bin/run \
                     --ckpt-dir=${userDir}/models/Stable-diffusion \
+                    --embeddings-dir=${userDir}/embeddings \
                     --hypernetwork-dir=${userDir}/hypernetworks \
                     --codeformer-models-path=${userDir}/models/Codeformer \
                     --gfpgan-models-path=${userDir}/models/GFPGAN \
