@@ -1,0 +1,21 @@
+#+title: NIX Stable Diffusion WEBUI
+
+A fully reproducible nix flake for [[https://github.com/AUTOMATIC1111/stable-diffusion-webui/][automatic1111/stable-diffusion-webui]] with CUDA support.
+
+Run the webui:
+
+#+begin_src sh
+nix run github:maxaudron/stable-diffusion-nix#automatic1111
+#+end_src
+
+You can accept the following prompts to use the nix cache i have provided.
+
+By default all user data is saved in ~$HOME/stable-diffusion~. You will have to
+manually set the output directory in the webui settings after first starting it,
+or it will output to ~$PWD~.
+
+This flake also packages [[https://github.com/invoke-ai/InvokeAI][InvokeAI]]
+
+#+begin_src sh
+nix run github:maxaudron/stable-diffusion-nix#invoke-ai
+#+end_src
