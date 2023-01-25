@@ -84,11 +84,12 @@
                   "--binary"
                 ];
                 patches = [
-                  ./automatic1111/sd_modules_path.patch
-                  ./automatic1111/sd_extensions_dir.patch
-                  ./automatic1111/sd_params_file.patch
-                  ./automatic1111/sd_cache_file.patch
+                  ./automatic1111/sd_data_dir.patch
                 ];
+
+                postPatch = ''
+                  sed -i 's/stored_commit_hash = None/stored_commit_hash = "${automatic1111.shortRev}"/' launch.py
+                '';
 
                 nativeBuildInputs = [
                   pkgs.autoPatchelfHook
@@ -187,7 +188,10 @@
                     cp "${automatic1111}/models/VAE-approx/model.pt" "${userDir}/models/VAE-approx/model.pt"
                   fi
 
+                  cd ${self.packages.${system}.automatic1111}/${pkgs.python310Packages.python.sitePackages}
+
                   ${self.packages.${system}.automatic1111}/bin/run \
+                    --data-dir=${userDir} \
                     --ckpt-dir=${userDir}/models/Stable-diffusion \
                     --embeddings-dir=${userDir}/embeddings \
                     --hypernetwork-dir=${userDir}/hypernetworks \

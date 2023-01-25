@@ -5,12 +5,13 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry]
 name = "automatic1111"
 description = "automatic1111"
-version = "20230120"
+version = "20230126"
 authors = []
 packages = [
     { include = "modules" },
     { include = "scripts" },
     { include = "webui.py" },
+    { include = "launch.py" },
 ]
 
 include = [
@@ -21,7 +22,7 @@ include = [
   "html/*",
   "configs/*",
   "javascript/*",
-  "extensions-builtin/*",
+  "extensions-builtin/**/*",
 ]
 
 [tool.poetry.scripts]
@@ -74,6 +75,8 @@ k-diffusion = { git = "https://github.com/Birch-san/k-diffusion.git", rev = "5b3
 open-clip-torch = { git = "https://github.com/mlfoundations/open_clip.git", rev = "bb6e834e9c70d9c27d0dc3ecedeebeaeb1ffad6b" }
 stable-diffusion = { git = "https://github.com/Stability-AI/stablediffusion.git", rev = "47b6b607fdd31875c9279cd2f4f16b92e4ea958e" }
 taming-transformers = { git = "https://github.com/CompVis/taming-transformers.git", rev = "24268930bf1dce879235a7fddd0b2355b84d7ea6" }
+
+# Can't install these as the project setup are bad
 # codeformer = { git = "https://github.com/sczhou/CodeFormer.git", rev = "c5b4593074ba6214284d6acd5f1719b6c5d739af" }
 # blip = { git = "https://github.com/salesforce/BLIP.git", rev = "48211a1594f1321b00f14c9f7a5b4813144b2fb9" }
 
