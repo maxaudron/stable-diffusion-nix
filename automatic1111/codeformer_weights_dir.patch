@@ -1,0 +1,13 @@
+diff --git i/facelib/utils/misc.py w/facelib/utils/misc.py
+index 1875579..b63436b 100644
+--- i/facelib/utils/misc.py
++++ w/facelib/utils/misc.py
+@@ -8,7 +8,7 @@ from torch.hub import download_url_to_file, get_dir
+ from urllib.parse import urlparse
+ # from basicsr.utils.download_util import download_file_from_google_drive
+ 
+-ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
++ROOT_DIR = os.environ.get("CODEFORMER_WEIGHTS")
+ 
+ 
+ def download_pretrained_models(file_ids, save_path_root):

@@ -98,8 +98,6 @@
                 preBuild = ''
                   cp ${./automatic1111/pyproject.toml} ./pyproject.toml
                   cp ${./automatic1111/poetry.lock} ./poetry.lock
-
-                  ls -al .
                 '';
 
                 pipInstallFlags = "--no-deps";
@@ -120,6 +118,10 @@
                   cp -r ${packages.stable-diffusion}/* ${outDir}/repositories/stable-diffusion-stability-ai/
 
                   chmod +w -R ${outDir}/repositories
+
+                  pushd ${outDir}/repositories/CodeFormer
+                  patch --strip=1 < ${./automatic1111/codeformer_weights_dir.patch}
+                  popd
                 '';
 
                 overrides = [ overrides defaultPoetryOverrides ];
@@ -175,6 +177,7 @@
                   export SD_EXTENSIONS_DIR="${userDir}/extensions"
                   export SD_PARAMS_FILE="${userDir}/configs/params.txt"
                   export SD_CACHE_FILE="${userDir}/cache.json"
+                  export CODEFORMER_WEIGHTS="${userDir}/models/Codeformer"
 
                   [ ! -d "${userDir}/outputs" ] && mkdir -p "${userDir}/outputs"
                   [ ! -d "${userDir}/configs" ] && mkdir -p "${userDir}/configs"
