@@ -5,7 +5,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry]
 name = "automatic1111"
 description = "automatic1111"
-version = "20230126"
+version = "20230128"
 authors = []
 packages = [
     { include = "modules" },

@@ -79,14 +79,6 @@
 
                 dontUseWheelUnpack = true;
 
-                patchFlags = [
-                  "--strip=1"
-                  "--binary"
-                ];
-                patches = [
-                  ./automatic1111/sd_data_dir.patch
-                ];
-
                 postPatch = ''
                   sed -i 's/stored_commit_hash = None/stored_commit_hash = "${automatic1111.shortRev}"/' launch.py
                 '';

@@ -3,11 +3,11 @@
     "automatic1111": {
       "flake": false,
       "locked": {
-        "lastModified": 1674733723,
-        "narHash": "sha256-2hiXVD5oEd//OJVER2Y1XqwOJFn4hrxvosRbNYVixPg=",
+        "lastModified": 1674908681,
+        "narHash": "sha256-H0DdZU2OJtYtQgYvEAXuhfF/UpC2DnHGqeNDaWTMLTk=",
         "owner": "AUTOMATIC1111",
         "repo": "stable-diffusion-webui",
-        "rev": "645f4e7ef8c9d59deea7091a22373b2da2b780f2",
+        "rev": "d04e3e921e8ee71442a1f4a1d6e91c05b8238007",
         "type": "github"
       },
       "original": {
