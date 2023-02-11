@@ -79,6 +79,14 @@
 
                 dontUseWheelUnpack = true;
 
+                patchFlags = [
+                  "--strip=1"
+                  "--binary"
+                ];
+                patches = [
+                  ./automatic1111/gradio_file_directories.patch
+                ];
+
                 postPatch = ''
                   sed -i 's/stored_commit_hash = None/stored_commit_hash = "${automatic1111.shortRev}"/' launch.py
                 '';
@@ -165,10 +173,6 @@
                   cudaPackages.cudnn
                 ]);
                 runScript = "${pkgs.writeShellScriptBin "run.sh" ''
-                  export SD_MODELS_PATH="${userDir}/models"
-                  export SD_EXTENSIONS_DIR="${userDir}/extensions"
-                  export SD_PARAMS_FILE="${userDir}/configs/params.txt"
-                  export SD_CACHE_FILE="${userDir}/cache.json"
                   export CODEFORMER_WEIGHTS="${userDir}/models/Codeformer"
 
                   [ ! -d "${userDir}/outputs" ] && mkdir -p "${userDir}/outputs"
@@ -187,14 +191,6 @@
 
                   ${self.packages.${system}.automatic1111}/bin/run \
                     --data-dir=${userDir} \
-                    --ckpt-dir=${userDir}/models/Stable-diffusion \
-                    --embeddings-dir=${userDir}/embeddings \
-                    --hypernetwork-dir=${userDir}/hypernetworks \
-                    --codeformer-models-path=${userDir}/models/Codeformer \
-                    --gfpgan-models-path=${userDir}/models/GFPGAN \
-                    --esrgan-models-path=${userDir}/models/ESRGAN \
-                    --bsrgan-models-path=${userDir}/models/BSRGAN \
-                    --realesrgan-models-path=${userDir}/models/RealESRGAN \
                     --ui-config-file=${userDir}/configs/ui_config.json \
                     --ui-settings-file=${userDir}/configs/ui_settings.json \
                     --disable-console-progressbars \

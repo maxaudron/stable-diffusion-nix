@@ -1,0 +1,14 @@
+diff --git i/webui.py w/webui.py
+index 41f32f5..0af7709 100644
+--- i/webui.py
++++ w/webui.py
+@@ -207,7 +207,8 @@ def webui():
+             debug=cmd_opts.gradio_debug,
+             auth=[tuple(cred.split(':')) for cred in cmd_opts.gradio_auth.strip('"').split(',')] if cmd_opts.gradio_auth else None,
+             inbrowser=cmd_opts.autolaunch,
+-            prevent_thread_lock=True
++            prevent_thread_lock=True,
++            file_directories=[modules.paths.data_path],
+         )
+         # after initial launch, disable --autolaunch for subsequent restarts
+         cmd_opts.autolaunch = False
