@@ -3,11 +3,11 @@
     "automatic1111": {
       "flake": false,
       "locked": {
-        "lastModified": 1674908681,
-        "narHash": "sha256-H0DdZU2OJtYtQgYvEAXuhfF/UpC2DnHGqeNDaWTMLTk=",
+        "lastModified": 1675593276,
+        "narHash": "sha256-aSfk+FuZLoYHicGG7KYcBSq9n7NplDnoTQF2fS1wKvA=",
         "owner": "AUTOMATIC1111",
         "repo": "stable-diffusion-webui",
-        "rev": "d04e3e921e8ee71442a1f4a1d6e91c05b8238007",
+        "rev": "ea9bd9fc7409109adcd61b897abc2c8881161256",
         "type": "github"
       },
       "original": {
@@ -19,11 +19,11 @@
     "invokeai": {
       "flake": false,
       "locked": {
-        "lastModified": 1674230306,
-        "narHash": "sha256-O+CLXgI0tUuFTWdU2z7p86hvYCMaHS2NduS3FyY6Pi8=",
+        "lastModified": 1676052014,
+        "narHash": "sha256-eKw0Avu2Wui2I9flZFMQSY788MC7pIc/kKCKd2QCzUQ=",
         "owner": "invoke-ai",
         "repo": "InvokeAI",
-        "rev": "f3ff386491b84e4c4cbd8b72c8e4cac84b451d3b",
+        "rev": "097e41e8d2b4c8c7a0f143bcef567a173ab73912",
         "type": "github"
       },
       "original": {
@@ -34,10 +34,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1673800717,
-        "narHash": "sha256-SFHraUqLSu5cC6IxTprex/nTsI81ZQAtDvlBvGDWfnA=",
-        "path": "/nix/store/d6vlzbp9x6ixk1d1gr7if0f2ji6s8q4v-source",
-        "rev": "2f9fd351ec37f5d479556cd48be4ca340da59b8f",
+        "lastModified": 1675757258,
+        "narHash": "sha256-pIRer8vdsoherlRKpzfnHbMZ5TsAcvRlXHCIaHkIUbg=",
+        "path": "/nix/store/5r6mzawp2mjzlpy66q7p967qw3y7hnn0-source",
+        "rev": "af96094e9b8eb162d70a84fa3b39f4b7a8b264d2",
         "type": "path"
       },
       "original": {
@@ -55,11 +55,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1673926875,
-        "narHash": "sha256-QOsT76Al0Igpo0u5vtQJuDSOxrocX3sTD523pLPEklc=",
+        "lastModified": 1674917871,
+        "narHash": "sha256-0dLfkWyWWeKDZhupteyBNlastcEzrCmCTdFGtcj7F10=",
         "owner": "nix-community",
         "repo": "poetry2nix",
-        "rev": "a5c454a834cd290dd4d33102ab8b4aa37d850e65",
+        "rev": "860530598f2ab9a9a0e89dc79851d14b0aed3bf7",
         "type": "github"
       },
       "original": {

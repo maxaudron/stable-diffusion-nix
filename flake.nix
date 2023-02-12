@@ -79,13 +79,13 @@
 
                 dontUseWheelUnpack = true;
 
-                patchFlags = [
-                  "--strip=1"
-                  "--binary"
-                ];
-                patches = [
-                  ./automatic1111/gradio_file_directories.patch
-                ];
+                # patchFlags = [
+                #   "--strip=1"
+                #   "--binary"
+                # ];
+                # patches = [
+                #   ./automatic1111/gradio_file_directories.patch
+                # ];
 
                 postPatch = ''
                   sed -i 's/stored_commit_hash = None/stored_commit_hash = "${automatic1111.shortRev}"/' launch.py

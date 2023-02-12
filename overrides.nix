@@ -42,7 +42,6 @@ self: super: (addNvidia self super [
 ]) // {
   wheel = super.wheel.override { preferWheel = false; };
 
-  orjson = super.orjson.override { preferWheel = false; };
 
   font-roboto = super.font-roboto.overridePythonAttrs (attrs: {
     buildInputs = (attrs.buildInputs or [ ]) ++ (with super; [
@@ -66,6 +65,20 @@ self: super: (addNvidia self super [
       poetry
     ]);
   });
+
+  orjson = pkgs.python310Packages.orjson;
+    # (super.orjson.override { preferWheel = false; }).overridePythonAttrs (old: {
+    #   cargoDeps = pkgs.rustPlatform.fetchCargoTarball {
+    #     inherit (old) src;
+    #     name = "${old.pname}-${old.version}";
+    #     hash = "sha256-8T//q6nQoZhh8oJWDCeQf3gYRew58dXAaxkYELY4CJM=";
+    #   };
+    #   nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
+    #     pkgs.rustPlatform.cargoSetupHook
+    #     pkgs.rustPlatform.maturinBuildHook
+    #   ];
+    #   buildInputs = (old.buildInputs or [ ]) ++ lib.optional pkgs.stdenv.isDarwin pkgs.libiconv;
+    # });
 
   xformers = (super.xformers.override {
     preferWheel = true;

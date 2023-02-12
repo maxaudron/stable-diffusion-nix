@@ -5,7 +5,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry]
 name = "automatic1111"
 description = "automatic1111"
-version = "20230128"
+version = "20230212"
 authors = []
 packages = [
     { include = "modules" },
@@ -32,7 +32,7 @@ run = 'webui:webui'
 [tool.poetry.dependencies]
 python = "^3.10"
 
-xformers = "0.0.16.dev430"
+xformers = "0.0.16"
 
 GitPython = ">=3.1.30"
 Pillow = ">=9.4.0"
@@ -66,9 +66,7 @@ timm = "==0.4.12"
 torch = ">=1.13.1"
 torchdiffeq = ">=0.2.3"
 torchsde = ">=0.2.5"
-transformers = "==4.19.2"
-
-numba = ">=0.56.4"
+transformers = "==4.25.1"
 
 clip = { git = "https://github.com/openai/CLIP.git", rev = "d50d76daa670286dd6cacf3bcd80b5e4823fc8e1" }
 k-diffusion = { git = "https://github.com/Birch-san/k-diffusion.git", rev = "5b3af030dd83e0297272d861c19477735d0317ec" }
@@ -95,3 +93,7 @@ tqdm = "*"
 yapf = "*"
 lpips = "*"
 gdown = "*"
+
+# /Temporary/ overrides
+numba = ">=0.56.4"
+fastapi = "<=0.90.1"
