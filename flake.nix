@@ -26,7 +26,7 @@
     };
 
     invokeai = {
-      url = "github:invoke-ai/InvokeAI";
+      url = "github:invokeai/InvokeAI/f5d1fbd89656d190fb721a292d1978689a54ec0b"; # v2.3.0
       flake = false;
     };
 
@@ -127,41 +127,54 @@
                 overrides = [ overrides defaultPoetryOverrides ];
               };
 
-            invoke-ai = mkPoetryApplication {
-              projectDir = ./invoke-ai;
-              src = invokeai;
-              python = pkgs.python310;
-              pyproject = ./invoke-ai/pyproject.toml;
-              poetrylock = ./invoke-ai/poetry.lock;
+            invokeai = mkPoetryApplication {
+              projectDir = ./invokeai;
+              src = ./invokeai;
+              python = pkgs.python39;
+              pyproject = ./invokeai/pyproject.toml;
+              poetrylock = ./invokeai/poetry.lock;
               preferWheels = true;
 
-              patches = [ ./invoke-ai/pyreadline3.patch ];
+              # patches = [ ./invokeai/pyreadline3.patch ];
+
+              nativeBuildInputs = [
+                pkgs.autoPatchelfHook
+              ];
+
+              preBuild = ''
+                cp ${./invokeai/pyproject.toml} ./pyproject.toml
+                cp ${./invokeai/poetry.lock} ./poetry.lock
+              '';
 
               dontUseWheelUnpack = true;
 
-              overrides = [ overridesdefaultPoetryOverrides ];
+              overrides = [ overrides defaultPoetryOverrides ];
             };
           };
 
           apps = {
-            invoke-ai-configure = {
+            invokeai-configure = {
               type = "app";
               program = "${pkgs.writeShellScriptBin "configure.sh" ''
-              cd ${invokeai}
-              ${self.packages.${system}.invoke-ai}/bin/configure_invokeai.py $@
+              export INVOKEAI_ROOT="${userDir}/invokeai"
+              ${self.packages.${system}.invokeai}/bin/invokeai-configure $@
             ''}/bin/configure.sh";
             };
 
-            invoke-ai = {
+            invokeai = {
               type = "app";
               program = "${pkgs.buildFHSUserEnv {
-                name = "invoke-ai-fhs";
+                name = "invokeai-fhs";
                 targetPkgs = pkgs: (with pkgs; [
                   cudatoolkit
                   cudaPackages.cudnn
                 ]);
-                runScript = "${self.packages.${system}.invoke-ai}/bin/invoke.py";
-              }}/bin/invoke-ai-fhs";
+
+                runScript = "${pkgs.writeShellScriptBin "run.sh" ''
+                  export INVOKEAI_ROOT="${userDir}/invokeai"
+                  ${self.packages.${system}.invokeai}/bin/invokeai $@
+                ''}/bin/run.sh";
+              }}/bin/invokeai-fhs";
             };
 
             automatic1111 = {
@@ -197,8 +210,8 @@
                     --xformers \
                     $@
                 ''}/bin/run.sh";
-              }}/bin/automatic1111-fhs";
-            };
+            }}/bin/automatic1111-fhs";
+          };
           };
 
           devShells.default = pkgs.mkShell {

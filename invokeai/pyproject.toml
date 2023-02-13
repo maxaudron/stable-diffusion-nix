@@ -1,0 +1,31 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "invokeai-wrapper"
+description = "invokeai"
+version = "2.3.0"
+authors = []
+
+packages = [
+    { include = "placeholder.py" },
+    # { include = "ldm*" },
+]
+
+# include = [
+#   "invokeai/assets/web/**/*",
+#   "invokeai/backend/**/*",
+#   "invokeai/configs/**/*",
+#   "invokeai/frontend/dist/**/*",
+# ]
+
+[tool.poetry.scripts]
+"invokeai" = "ldm.invoke.CLI:main"
+"invokeai-configure" = "ldm.invoke.config.invokeai_configure:main"
+"invokeai-merge" = "ldm.invoke.merge_diffusers:main"   # note name munging
+"invokeai-ti" = "ldm.invoke.training.textual_inversion:main"
+
+[tool.poetry.dependencies]
+python = "<3.11,>=3.9"
+InvokeAI = { version = "2.3.0", extras = ["xformers"] }
