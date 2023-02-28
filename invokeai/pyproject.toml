@@ -5,7 +5,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry]
 name = "invokeai-wrapper"
 description = "invokeai"
-version = "2.3.0"
+version = "2.3.1.post1"
 authors = []
 
 packages = [
@@ -28,4 +28,4 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "<3.11,>=3.9"
-InvokeAI = { version = "2.3.0", extras = ["xformers"] }
+InvokeAI = { version = "2.3.1.post1", extras = ["xformers"] }

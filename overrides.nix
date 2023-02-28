@@ -148,13 +148,38 @@ self: super: (addNvidia self super [
     ]);
   });
 
-  pypatchmatch = super.pypatchmatch.overridePythonAttrs (attrs: {
+  pypatchmatch = (super.pypatchmatch.override { preferWheel = false; }).overridePythonAttrs (attrs: {
     buildInputs = (attrs.buildInputs or [ ]) ++ (with super; [
       setuptools
-
       opencv-python
+
       pkgs.opencv
     ]);
+
+    preBuild = ''
+      ls -al
+      pushd patchmatch
+      export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -isystem ${pkgs.opencv}/include/opencv4"
+      make
+      popd
+    '';
+
+    postInstall = ''
+      cp patchmatch/libpatchmatch.so $out/${self.python.sitePackages}/patchmatch/
+    '';
+
+    preFixup = let
+      # we prepare our library path in the let clause to avoid it become part of the input of mkDerivation
+      libPath = lib.makeLibraryPath [
+        pkgs.opencv
+        pkgs.stdenv.cc.cc.lib
+      ];
+    in ''
+      patchelf \
+        --set-rpath "${libPath}" \
+        $out/${self.python.sitePackages}/patchmatch/libpatchmatch.so
+    '';
+
   });
 
   pytorch-lightning = (super.pytorch-lightning.override {

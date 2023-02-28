@@ -26,7 +26,8 @@
     };
 
     invokeai = {
-      url = "github:invokeai/InvokeAI/f5d1fbd89656d190fb721a292d1978689a54ec0b"; # v2.3.0
+      # url = "github:invokeai/InvokeAI/210998081ad5a121a5037a3dbfd8c1efb3b48e67"; # v2.3.1
+      url = "https://github.com/invoke-ai/InvokeAI/archive/refs/tags/v2.3.1.post1.tar.gz";
       flake = false;
     };
 
