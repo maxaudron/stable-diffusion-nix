@@ -73,7 +73,7 @@
               mkPoetryApplication {
                 projectDir = ./automatic1111;
                 src = automatic1111;
-                python = pkgs.python310;
+                python = pkgs.python39;
                 pyproject = ./automatic1111/pyproject.toml;
                 poetrylock = ./automatic1111/poetry.lock;
                 preferWheels = true;
@@ -100,8 +100,6 @@
                   cp ${./automatic1111/pyproject.toml} ./pyproject.toml
                   cp ${./automatic1111/poetry.lock} ./poetry.lock
                 '';
-
-                pipInstallFlags = "--no-deps";
 
                 postInstall = ''
                   mkdir -p ${outDir}/localizations
@@ -216,7 +214,7 @@
           };
 
           devShells.default = pkgs.mkShell {
-            buildInputs = [ pkgs.poetry ];
+            buildInputs = [ pkgs.python39 pkgs.poetry ];
           };
         });
 }

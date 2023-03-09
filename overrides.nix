@@ -43,6 +43,26 @@ self: super: (addNvidia self super [
 ]) // {
   wheel = super.wheel.override { preferWheel = false; };
 
+  gradio = (super.gradio.override { preferWheel = true; }).overridePythonAttrs (attrs: {
+    buildInputs = (attrs.buildInputs or [ ]) ++ (with super; [
+      setuptools
+      pip
+    ]);
+
+    # installPhase = ''
+    #   echo "Executing pipInstallPhase"
+
+    #   mkdir -p "$out/${self.python.sitePackages}"
+    #   export PYTHONPATH="$out/${self.python.sitePackages}:$PYTHONPATH"
+
+    #   pushd dist || return 1
+    #   ${super.pip}/bin/pip install ./*.whl --no-index --no-warn-script-location --prefix="$out" --no-cache --no-deps
+    #   popd || return 1
+
+    #   echo "Finished executing pipInstallPhase"
+    # '';
+  });
+
   font-roboto = super.font-roboto.overridePythonAttrs (attrs: {
     buildInputs = (attrs.buildInputs or [ ]) ++ (with super; [
       setuptools
@@ -151,15 +171,17 @@ self: super: (addNvidia self super [
   pypatchmatch = (super.pypatchmatch.override { preferWheel = false; }).overridePythonAttrs (attrs: {
     buildInputs = (attrs.buildInputs or [ ]) ++ (with super; [
       setuptools
-      opencv-python
-
+      self.opencv-python
       pkgs.opencv
     ]);
 
+    nativeBuildInputs = (attrs.nativeBuildInputs or [ ]) ++ (with super; [
+      pkgs.pkg-config
+    ]);
+
     preBuild = ''
-      ls -al
       pushd patchmatch
-      export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -isystem ${pkgs.opencv}/include/opencv4"
+      export NIX_CFLAGS_COMPILE="$NIX_CFLAGS_COMPILE -isystem ${pkgs.opencv}/include/opencv4 -Wl,-z,defs"
       make
       popd
     '';
