@@ -27,7 +27,7 @@
 
     invokeai = {
       # url = "github:invokeai/InvokeAI/210998081ad5a121a5037a3dbfd8c1efb3b48e67"; # v2.3.1
-      url = "https://github.com/invoke-ai/InvokeAI/archive/refs/tags/v2.3.1.post1.tar.gz";
+      url = "https://github.com/invoke-ai/InvokeAI/archive/refs/tags/v2.3.2.tar.gz";
       flake = false;
     };
 
@@ -73,7 +73,7 @@
               mkPoetryApplication {
                 projectDir = ./automatic1111;
                 src = automatic1111;
-                python = pkgs.python39;
+                python = pkgs.python310;
                 pyproject = ./automatic1111/pyproject.toml;
                 poetrylock = ./automatic1111/poetry.lock;
                 preferWheels = true;
@@ -129,7 +129,7 @@
             invokeai = mkPoetryApplication {
               projectDir = ./invokeai;
               src = ./invokeai;
-              python = pkgs.python39;
+              python = pkgs.python310;
               pyproject = ./invokeai/pyproject.toml;
               poetrylock = ./invokeai/poetry.lock;
               preferWheels = true;
@@ -214,7 +214,7 @@
           };
 
           devShells.default = pkgs.mkShell {
-            buildInputs = [ pkgs.python39 pkgs.poetry ];
+            buildInputs = [ pkgs.python310 pkgs.poetry ];
           };
         });
 }

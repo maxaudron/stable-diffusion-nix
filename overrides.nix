@@ -63,6 +63,12 @@ self: super: (addNvidia self super [
     # '';
   });
 
+  lit = super.lit.overridePythonAttrs (attrs: {
+    buildInputs = (attrs.buildInputs or [ ]) ++ (with super; [
+      setuptools
+    ]);
+  });
+
   font-roboto = super.font-roboto.overridePythonAttrs (attrs: {
     buildInputs = (attrs.buildInputs or [ ]) ++ (with super; [
       setuptools
@@ -86,7 +92,8 @@ self: super: (addNvidia self super [
     ]);
   });
 
-  orjson = pkgs.python39Packages.orjson;
+  orjson = pkgs.python310Packages.orjson;
+  pybind11 = pkgs.python310Packages.pybind11;
 
   xformers = (super.xformers.override {
     preferWheel = true;

@@ -19,13 +19,13 @@
     "invokeai": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-zxPTiesI7/BoFjXlJU/oiuUAIkp33Ps7ZgOkC8m6EaA=",
+        "narHash": "sha256-xz4osR8xJhf5Rpm4sUMjOIRuVa/6WlE3nTfHUmGACmA=",
         "type": "tarball",
-        "url": "https://github.com/invoke-ai/InvokeAI/archive/refs/tags/v2.3.1.post1.tar.gz"
+        "url": "https://github.com/invoke-ai/InvokeAI/archive/refs/tags/v2.3.2.tar.gz"
       },
       "original": {
         "type": "tarball",
-        "url": "https://github.com/invoke-ai/InvokeAI/archive/refs/tags/v2.3.1.post1.tar.gz"
+        "url": "https://github.com/invoke-ai/InvokeAI/archive/refs/tags/v2.3.2.tar.gz"
       }
     },
     "nixpkgs": {
