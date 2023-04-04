@@ -5,20 +5,12 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry]
 name = "invokeai-wrapper"
 description = "invokeai"
-version = "2.3.2"
+version = "2.3.3"
 authors = []
 
 packages = [
     { include = "placeholder.py" },
-    # { include = "ldm*" },
 ]
-
-# include = [
-#   "invokeai/assets/web/**/*",
-#   "invokeai/backend/**/*",
-#   "invokeai/configs/**/*",
-#   "invokeai/frontend/dist/**/*",
-# ]
 
 [tool.poetry.scripts]
 "invokeai" = "ldm.invoke.CLI:main"
@@ -28,4 +20,4 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "<3.11,>=3.9"
-InvokeAI = { version = "2.3.2", extras = ["xformers"] }
+InvokeAI = { version = "2.3.3", extras = ["xformers"] }
