@@ -16,18 +16,6 @@
         "type": "github"
       }
     },
-    "invokeai": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-xz4osR8xJhf5Rpm4sUMjOIRuVa/6WlE3nTfHUmGACmA=",
-        "type": "tarball",
-        "url": "https://github.com/invoke-ai/InvokeAI/archive/refs/tags/v2.3.2.tar.gz"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://github.com/invoke-ai/InvokeAI/archive/refs/tags/v2.3.2.tar.gz"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1675757258,
@@ -67,7 +55,6 @@
     "root": {
       "inputs": {
         "automatic1111": "automatic1111",
-        "invokeai": "invokeai",
         "nixpkgs": "nixpkgs",
         "poetry2nix": "poetry2nix",
         "utils": "utils"

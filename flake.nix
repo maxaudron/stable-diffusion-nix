@@ -25,19 +25,13 @@
       };
     };
 
-    invokeai = {
-      # url = "github:invokeai/InvokeAI/210998081ad5a121a5037a3dbfd8c1efb3b48e67"; # v2.3.1
-      url = "https://github.com/invoke-ai/InvokeAI/archive/refs/tags/v2.3.2.tar.gz";
-      flake = false;
-    };
-
     automatic1111 = {
       url = "github:AUTOMATIC1111/stable-diffusion-webui";
       flake = false;
     };
   };
 
-  outputs = { self, nixpkgs, utils, poetry2nix, invokeai, automatic1111 }:
+  outputs = { self, nixpkgs, utils, poetry2nix, automatic1111 }:
     with nixpkgs.lib;
     utils.lib.eachDefaultSystem
       (system:

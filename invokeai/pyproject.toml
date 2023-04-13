@@ -5,7 +5,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry]
 name = "invokeai-wrapper"
 description = "invokeai"
-version = "2.3.3"
+version = "2.3.4"
 authors = []
 
 packages = [
@@ -15,9 +15,14 @@ packages = [
 [tool.poetry.scripts]
 "invokeai" = "ldm.invoke.CLI:main"
 "invokeai-configure" = "ldm.invoke.config.invokeai_configure:main"
-"invokeai-merge" = "ldm.invoke.merge_diffusers:main"   # note name munging
+"invokeai-model-install" = "ldm.invoke.config.model_install:main"
+"invokeai-merge" = "ldm.invoke.merge_diffusers:main"
 "invokeai-ti" = "ldm.invoke.training.textual_inversion:main"
+"invokeai-update" = "ldm.invoke.config.invokeai_update:main"
+"invokeai-batch" = "ldm.invoke.dynamic_prompts:main"
+"invokeai-metadata" = "ldm.invoke.invokeai_metadata:main"
 
 [tool.poetry.dependencies]
 python = "<3.11,>=3.9"
-InvokeAI = { version = "2.3.3", extras = ["xformers"] }
+diffusers = "=0.14.0"
+InvokeAI = { version = "2.3.4", extras = ["xformers"] }
